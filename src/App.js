@@ -1,7 +1,7 @@
 import React from "react"
 import axios from "axios"
 
-import { Container, Card, Image } from "semantic-ui-react"
+import { Container, Card, Image, Grid } from "semantic-ui-react"
 
 const API_STRING = `https://developers.zomato.com/api/v2.1/search?entity_id=74&entity_type=city`
 
@@ -16,9 +16,6 @@ export default class App extends React.Component {
     super()
     this.state = {
       restaurants: []
-      // restaurantNames: [],
-      // restaurantThumbnails: []
-      // restaurant
     }
   }
 
@@ -26,7 +23,6 @@ export default class App extends React.Component {
     axios
       .get(API_STRING, API_CONFIGURATION)
       .then(response => {
-        // console.log(response.data.restaurants)
         this.setState({
           restaurants: response.data.restaurants
         })
@@ -38,19 +34,26 @@ export default class App extends React.Component {
     const restaurants = this.state.restaurants.map((item, index) => {
       console.log(item.restaurant)
       return (
-        <div>
+        <Grid.Column key={index}>
           <Card>
-            <Image src="/" />
+            <Image src={item.restaurant.thumb} />
             <Card.Content>
               <Card.Header>{item.restaurant.name}</Card.Header>
-              <Card.Meta>Jl. Senopati, Jakarta</Card.Meta>
-              <Card.Description>Cheap sushi makes happy</Card.Description>
+              <Card.Meta>{item.restaurant.location.address}</Card.Meta>
             </Card.Content>
           </Card>
-        </div>
+        </Grid.Column>
       )
     })
 
-    return <div>{restaurants}</div>
+    return (
+      <div>
+        <Container fluid>
+          <Grid container columns={3}>
+            {restaurants}
+          </Grid>
+        </Container>
+      </div>
+    )
   }
 }
