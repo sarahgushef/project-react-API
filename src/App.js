@@ -2,6 +2,7 @@ import React from "react"
 import axios from "axios"
 
 import { Container, Card, Image, Grid } from "semantic-ui-react"
+import { RSA_NO_PADDING } from "constants"
 
 const API_STRING = `https://developers.zomato.com/api/v2.1/search?entity_id=74&entity_type=city`
 
@@ -11,6 +12,10 @@ const API_CONFIGURATION = {
   }
 }
 
+const CardStyle = {
+  height: "300px",
+  margin: "20px 0"
+}
 export default class App extends React.Component {
   constructor() {
     super()
@@ -35,7 +40,7 @@ export default class App extends React.Component {
       console.log(item.restaurant)
       return (
         <Grid.Column key={index}>
-          <Card>
+          <Card style={CardStyle}>
             <Image src={item.restaurant.thumb} />
             <Card.Content>
               <Card.Header>{item.restaurant.name}</Card.Header>
