@@ -2,13 +2,12 @@ import React from "react"
 import axios from "axios"
 
 import { Container, Card, Image, Grid } from "semantic-ui-react"
-import { RSA_NO_PADDING } from "constants"
 
-const API_STRING = `https://developers.zomato.com/api/v2.1/search?entity_id=74&entity_type=city`
+const API_STRING = `https://developers.zomato.com/api/v2.1/search?entity_id=74&entity_type=city&q=`
 
 const API_CONFIGURATION = {
   headers: {
-    "user-key": "6ff1cfa18e834e1de8af7b7920acb0a1"
+    "user-key": process.env.REACT_APP_API_KEY
   }
 }
 
@@ -17,11 +16,9 @@ const CardStyle = {
   margin: "20px 0"
 }
 export default class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      restaurants: []
-    }
+  state = {
+    restaurants: [],
+    searchInputValue: ""
   }
 
   componentDidMount() {
@@ -35,9 +32,15 @@ export default class App extends React.Component {
       .catch(error => console.log(error))
   }
 
+  handleChange = event => {
+    this.setState({
+      searchInputValue: event.target.value
+    })
+    console.log(this.state.searchInputValue)
+  }
+
   render() {
     const restaurants = this.state.restaurants.map((item, index) => {
-      console.log(item.restaurant)
       return (
         <Grid.Column key={index}>
           <Card style={CardStyle}>
@@ -53,11 +56,21 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <Container fluid>
-          <Grid container columns={3}>
-            {restaurants}
-          </Grid>
+        <Container>
+          <form>
+            <input
+              type="text"
+              placeholder="Mau makan apa?"
+              onChange={this.handleChange}
+            />
+          </form>
         </Container>
+
+        {/* Start of Restaurant Grid */}
+        <Grid container columns={3}>
+          {restaurants}
+        </Grid>
+        {/* End of Restaurant Gridx */}
       </div>
     )
   }
