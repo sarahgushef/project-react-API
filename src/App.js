@@ -1,27 +1,30 @@
-import React from "react"
-import axios from "axios"
+import React from 'react'
+import axios from 'axios'
 
-import { Container, Card, Image, Grid } from "semantic-ui-react"
+import { Container, Card, Image, Grid } from 'semantic-ui-react'
 
 const API_STRING = `https://developers.zomato.com/api/v2.1/search?entity_id=74&entity_type=city&q=`
 
 const API_CONFIGURATION = {
   headers: {
-    "user-key": process.env.REACT_APP_ZOMATO_API_KEY
+    'user-key': process.env.REACT_APP_ZOMATO_API_KEY
   }
 }
 
 const CardStyle = {
-  height: "300px",
-  margin: "20px 0"
+  height: '300px',
+  margin: '20px 0'
 }
 export default class App extends React.Component {
   state = {
     restaurants: [],
-    searchInputValue: ""
+    searchInputValue: ''
   }
 
   componentDidMount() {
+    console.info(API_STRING)
+    console.info(API_CONFIGURATION)
+
     axios
       .get(API_STRING, API_CONFIGURATION)
       .then(response => {
@@ -30,9 +33,9 @@ export default class App extends React.Component {
         })
       })
       .catch(error => {
-        console.warn({
-          message: `API_STRING and API_CONFIGURATION might not setup properly`
-        })
+        console.warn(
+          `API_STRING and API_CONFIGURATION might not setup properly`
+        )
         console.error(error)
       })
   }
