@@ -22,9 +22,6 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    console.info(API_STRING)
-    console.info(API_CONFIGURATION)
-
     axios
       .get(API_STRING, API_CONFIGURATION)
       .then(response => {
