@@ -7,7 +7,7 @@ const API_STRING = `https://developers.zomato.com/api/v2.1/search?entity_id=74&e
 
 const API_CONFIGURATION = {
   headers: {
-    "user-key": process.env.REACT_APP_API_KEY
+    "user-key": process.env.REACT_APP_ZOMATO_API_KEY
   }
 }
 
@@ -29,7 +29,12 @@ export default class App extends React.Component {
           restaurants: response.data.restaurants
         })
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.warn({
+          message: `API_STRING and API_CONFIGURATION might not setup properly`
+        })
+        console.error(error)
+      })
   }
 
   handleChange = event => {

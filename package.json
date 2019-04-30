@@ -11,6 +11,7 @@
     "semantic-ui-react": "^0.86.0"
   },
   "scripts": {
+    "setup": "touch .env",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
